@@ -20,6 +20,9 @@ QUANTILES = dict(slow=35, standard=60, fast=90, instant=100)
 WINDOW = 200
 
 w3 = Web3(HTTPProvider(ETH_RPC_URL))
+from web3.middleware import geth_poa_middleware
+# inject the poa compatibility middleware to the innermost layer
+w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 app = Sanic("Zinnion Gas Station")
 log = logging.getLogger('sanic.error')
 app.config.LOGO = 'Zinnion Gas Station'
